@@ -2,20 +2,25 @@ import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'ap-produto',
-    templateUrl: 'produto.component.html'
-})
-export class ProdutoComponent {
-
+    templateUrl: './produto.component.html',
+    styleUrls: ['./produto.component.css']
+  })
+  export class ProdutoComponent {
+  
     @Input() id:number;
-    
-    @Input() nome:'';
-
+  
+    @Input() nome:string = '';
+  
     @Input() preco:number;
-
-    @Input() descricao:'';
-
-    @Input() quantidadeEstoque:number;
-
-    @Input() categoria:number;    
-    
-}
+  
+    @Input() descricao:string = '';
+  
+    @Input() qntEmEstoque:number;
+  
+    @Input() categoriaId:number;
+  
+    @Input() categoriaAtivo:boolean;
+  
+    @Input() categoriaNome:string = '';
+  }
+  

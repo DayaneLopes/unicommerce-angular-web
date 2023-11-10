@@ -11,7 +11,7 @@ import { ClienteService } from '../cliente/cliente.service';
 
 export class ClienteListComponent implements OnInit {
 
-    clientes: Cliente[] = [];
+  clientes: Cliente[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,

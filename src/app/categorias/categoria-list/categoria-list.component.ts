@@ -28,7 +28,6 @@ export class CategoriaListComponent implements OnInit {
       .subscribe(categorias => {
         this.categorias = this.categorias.concat(categorias);
       });
-      console.log("CategoriaListComponent");
-      console.log(this.categorias);
   }
 }
+

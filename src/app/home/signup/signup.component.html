@@ -1,0 +1,51 @@
+<h4 class="text-center"> Cadastro de Usuário</h4>
+
+<form [formGroup]="signupForm" class="form mt-4" (submit)="signup()">
+
+    <div class="form-group">
+        <input #loginInput formControlName="login" class="form-control" placeholder="login">
+        <ap-vmessage
+            *ngIf="signupForm.get('login').errors?.required"
+            text="Campo login obrigatório!">
+        </ap-vmessage>
+        <ap-vmessage
+            *ngIf="signupForm.get('login').errors?.minlength"
+            text="Minimum length is 2">
+        </ap-vmessage>
+        <ap-vmessage
+            *ngIf="signupForm.get('login').errors?.maxlength"
+            text="Maximum length is 30">
+        </ap-vmessage>
+        <ap-vmessage
+            *ngIf="signupForm.get('login').errors?.lowercase"
+            text="Must be lowercase">
+        </ap-vmessage>
+
+        <ap-vmessage
+            text="Username already taken"
+            *ngIf="signupForm.get('login').errors?.userNameTaken">
+        </ap-vmessage>
+        <small *ngIf="signupForm.get('login').valid" class="text-success">Login disponivel</small>
+
+    </div>
+
+    <div class="form-group">
+        <input formControlName="senha" type="senha" class="form-control" placeholder="senha">
+        <ap-vmessage
+            *ngIf="signupForm.get('senha').errors?.required"
+            text="Campo senha obrigatório!">
+        </ap-vmessage>
+        <ap-vmessage
+            *ngIf="signupForm.get('senha').errors?.minlength"
+            text="Minimum length is 8">
+        </ap-vmessage>
+        <ap-vmessage
+            *ngIf="signupForm.get('senha').errors?.maxlength"
+            text="Maximum length is 14">
+        </ap-vmessage>
+    </div>
+
+    <button [disabled]="signupForm.invalid || signupForm.pending" class="btn btn-primary btn-block">Cadastrar</button>
+
+    <p>Já possue login? <a [routerLink]="['']">Clique aqui para acessar!</a></p>
+</form>
