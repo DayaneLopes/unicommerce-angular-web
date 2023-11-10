@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Categoria } from '../categoria/categoria';
 import { CategoriaService } from '../categoria/categoria.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { PlatformDetectorService } from 'src/app/core/platform-detector/platform-detector.service';
 
 @Component({
   selector: 'app-categoria-form',
@@ -9,48 +12,40 @@ import { CategoriaService } from '../categoria/categoria.service';
 })
 export class CategoriaFormComponent implements OnInit {
 
-  categoria: Categoria = {
-    id: 0,
-    nome: '',
-    ativo: true
-  };
+  categoriaForm: FormGroup;
+  @ViewChild('#categoriaNomeInput') categoriaNomeInput: ElementRef<HTMLInputElement>;
+   categoria: Categoria;
 
   constructor(
-    private categoriaService: CategoriaService
-  ) { }
+      private formBuilder: FormBuilder,
+      private categoriaService: CategoriaService,
+      private router: Router,
+      private platformDetectorService: PlatformDetectorService
+  ) {}
 
-  ngOnInit() {
-    this.categoriaService.create(this.categoria).subscribe(
-      novaCategoria => {
-        this.categoria = novaCategoria;
-        console.log('Categoria criada com sucesso:', novaCategoria);
-      },
-      erro => {
-        console.error('Erro ao criar categoria:', erro);
-      }
-    );
+  ngOnInit(): void {
+      this.categoriaForm = this.formBuilder.group({
+          nome: ['', Validators.required],
+          status: ['', Validators.required]
+      });
   }
 
-
-  save() {
-    // Validar se o nome da categoria tem pelo menos 2 caracteres
-    if (this.categoria.nome && this.categoria.nome.trim().length >= 2) {
-      // Atualizar a propriedade 'ativo' para true antes de salvar
-      this.categoria.ativo = true;
+  addCategoria() {
+      this.categoria = this.categoriaForm.value;
       
-      // Chamar o serviço para salvar a categoria
-      this.categoriaService.create(this.categoria).subscribe(
-        novaCategoria => {
-          console.log('Categoria salva com sucesso:', novaCategoria);
-          // Você pode adicionar lógica adicional aqui após salvar a categoria, se necessário.
-        },
-        erro => {
-          console.error('Erro ao salvar categoria:', erro);
-        }
-      );
-    } else {
-      console.log('O nome da categoria deve ter pelo menos 2 caracteres.');
-    }
-  }
+      this.categoriaService
+          .adicionarCategoria(this.categoria)
+          .subscribe(
+              //() => this.router.navigateByUrl('categoria/lista'),
+              //() => this.router.navigate(['user', userName]),
+              err => {
+                  console.log(err);
+                  this.categoriaForm.reset();
+                  this.platformDetectorService.isPlatformBrowser() &&
+                  this.categoriaNomeInput.nativeElement.focus();
+                  alert('Dados invalidos para a categoria')
+              }
+        ); 
 
+  }
 }

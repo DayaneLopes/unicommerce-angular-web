@@ -1,20 +1,25 @@
-<p class="text-center text-muted" > 
-    Carregado
-</p>
-
-<ol class="list-unstyled">
-    <li *ngFor="let cols of rows" class="row no-gutters p-0">
-        <div *ngFor="let produto of cols" class="col-4" apDarkenOnHover>
-            <ap-card>
-                <ap-produto 
-                    [id]="produto.id" 
-                    [nome]="produto.nome"
-                    [preco]="produto.preco"
-                    [descricao]="produto.descricao"
-                    [quantidadeEstoque]="produto.quantidadeEstoque"
-                    [categoria]="produto.categoria">
-                </ap-produto>             
-            </ap-card>
-        </div>
-    </li>
-</ol>
+<div class="container">
+  
+    <h3>Lista de produtos <span class="badge badge-secondary">3 novas</span></h3>
+  
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Preço</th>
+          <th scope="col">Estoque</th>
+          <th scope="col">Categoria</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let produto of produtos">
+              <th scope="row">{{produto.id}}</th>
+              <td>{{produto.nome}}</td>
+              <td>{{produto.preco}}</td>
+              <td>{{produto.qntEmEstoque}}</td>
+              <td>{{produto.categoria.nome}}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
