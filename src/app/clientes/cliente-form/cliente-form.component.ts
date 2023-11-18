@@ -1,69 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ClienteService } from '../cliente/cliente.service';
 import { Cliente } from '../cliente/cliente';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { PlatformDetectorService } from 'src/app/core/platform-detector/platform-detector.service';
 
 @Component({
-  selector: 'app-cliente-form',
+  selector: 'ap-cliente-form',
   templateUrl: './cliente-form.component.html',
   styleUrls: ['./cliente-form.component.css']
 })
 export class ClienteFormComponent implements OnInit {
 
-  cliente: Cliente = {
-    id: 0,
-    nome: '',
-    cpf:'',
-    telefone:'',
-    rua:'',
-    numero: 0, 
-    complemento:'', 
-    bairro:'',
-    cidade:'', 
-    estado:''
-  };
+  clienteForm: FormGroup;
+  @ViewChild('#clienteNomeInput') clienteNomeInput: ElementRef<HTMLInputElement>;
+  cliente: Cliente;
 
   constructor(
-    private clienteService: ClienteService
-  ) { }
+      private formBuilder: FormBuilder,
+      private clienteService: ClienteService,
+      private router: Router,
+      private platformDetectorService: PlatformDetectorService
+  ) {}
 
-  ngOnInit() {
-    this.clienteService.create(this.cliente).subscribe(
-      novoCliente => {
-        this.cliente = novoCliente;
-        console.log('Cliente criada com sucesso:', novoCliente);
-      },
-      erro => {
-        console.error('Erro ao criar cliente:', erro);
-      }
-    );
+  ngOnInit(): void {
+      this.clienteForm = this.formBuilder.group({
+          nome: ['', Validators.required],
+          status: ['', Validators.required]
+      });
   }
 
+  addCliente() {
+      this.cliente = this.clienteForm.value;
+      
+      this.clienteService
+          .adicionarCliente(this.cliente)
+          .subscribe(
+              //() => this.router.navigateByUrl('cliente/lista'),
+              //() => this.router.navigate(['user', userName]),
+              err => {
+                  console.log(err);
+                  this.clienteForm.reset();
+                  this.platformDetectorService.isPlatformBrowser() &&
+                  this.clienteNomeInput.nativeElement.focus();
+                  alert('Dados invalidos para o cliente')
+              }
+        ); 
 
-  save() {
-    // Validar se todos os campos obrigatórios foram preenchidos
-    if (this.cliente.nome && this.cliente.nome.trim() !== '' &&
-        this.cliente.cpf && this.cliente.cpf.trim() !== '' &&
-        this.cliente.telefone && this.cliente.telefone.trim() !== '' &&
-        this.cliente.numero && Number.isInteger(this.cliente.numero) && this.cliente.numero > 0) {
-  
-      // Validar se o número é um inteiro positivo
-      if (Number.isInteger(this.cliente.numero) && this.cliente.numero > 0) {
-                
-        // Chamar o serviço para salvar o cliente
-        this.clienteService.create(this.cliente).subscribe(
-          novoCliente => {
-            console.log('Cliente salvo com sucesso:', novoCliente);
-            // Você pode adicionar lógica adicional aqui após salvar o cliente, se necessário.
-          },
-          erro => {
-            console.error('Erro ao salvar cliente:', erro);
-          }
-        );
-      } else {
-        console.log('Número deve ser um inteiro positivo.');
-      }
-    } else {
-      console.log('Todos os campos obrigatórios devem ser preenchidos.');
-    }
   }
 }

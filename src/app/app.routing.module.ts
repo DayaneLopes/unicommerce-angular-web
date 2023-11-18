@@ -15,56 +15,87 @@ import { ProdutoFormComponent } from './produtos/produto-form/produto-form.compo
 import { ProdutoListComponent } from './produtos/produto-list/produto-list.component';
 import { ProdutoListResolver } from './produtos/produto-list/produto-list.resolver';
 import { SignInComponent } from './home/signin/signin.component';
+import { LoginGuard } from './core/auth/login.guard';
+import { SignUpComponent } from './home/signup/signup.component';
+import { HomeComponent } from './home/home.component';
+import { AuthGuard } from './core/auth/auth.guard';
+import { UsuarioComponent } from './usuarios/usuario/usuario.component';
+import { UsuarioListComponent } from './usuarios/usuario-list/usuario-list.component';
+import { UsuarioListResolver } from './usuarios/usuario-list/usuario-list.resolver';
 
 const routes: Routes = [
+
+    //{
+       // path: 'home',
+       // loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+   // },
     { 
         path: '', 
-        component: SignInComponent 
+        component: HomeComponent,
+        canActivate: [LoginGuard],
+        children: [
+            {
+                path: '',
+                component: SignInComponent,
+            },
+            {
+                path: 'signup',
+                component: SignUpComponent,
+            },
+        ]
+    },
+    {
+        path: 'usuario', 
+        component: UsuarioComponent,
     },
     { 
-        path: 'user/:userName', 
-        component: PhotoListComponent,
+        path: 'usuario/lista', 
+        component: UsuarioListComponent,
         resolve: {
-            photos: PhotoListResolver
-        }
-    },
-    { 
-        path: 'p/add', 
-        component: PhotoFormComponent 
+            usuarios: UsuarioListResolver
+        },
+        canActivate: [AuthGuard]
     },
     { 
         path: 'categoria/lista', 
         component: CategoriaListComponent,
         resolve: {
-            photos: CategoriaListResolver
-        } 
+            categorias: CategoriaListResolver
+        },
+        canActivate: [AuthGuard]
     },
     { 
         path: 'categoria', 
-        component: CategoriaFormComponent
+        component: CategoriaFormComponent,
+        canActivate: [AuthGuard]
     },
     { 
         path: 'cliente', 
-        component: ClienteFormComponent
+        component: ClienteFormComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'cliente/lista', 
         component: ClienteListComponent,
         resolve: {
-            photos: ClienteListResolver
-        } 
+            clientes: ClienteListResolver
+        },
+        canActivate: [AuthGuard]
     },
     { 
         path: 'produto', 
-        component: ProdutoFormComponent
+        component: ProdutoFormComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'produto/lista', 
         component: ProdutoListComponent,
         resolve: {
-            photos: ProdutoListResolver
-        } 
+            produtos: ProdutoListResolver
+        }, 
+        canActivate: [AuthGuard]
     },
+  
     { 
         path: '**', 
         component: NotFoundComponent 

@@ -1,28 +1,28 @@
-<h4 class="text-center">Login</h4>
+<h4 class="text-center">Fazer Login</h4>
 
 <form [formGroup]="loginForm" class="form mt-4" (submit)="login()" >
 
     <div class="form-group">
-        <input 
-            formControlName="userName"
+        <input #userNameInput
+            formControlName="login"
             class="form-control" 
             placeholder="Usuário" 
             autofocus>  
         <ap-vmessage 
-            *ngIf="loginForm.get('userName').errors?.required"
+            *ngIf="loginForm.get('login').errors?.required"
             text="Campo usuário obrigatório">
         </ap-vmessage>
     </div>
 
     <div class="form-group">
         <input
-            formControlName="password"
+            formControlName="senha"
             type="password" 
             class="form-control" 
             placeholder="Senha"> 
             
         <ap-vmessage 
-            *ngIf="loginForm.get('password').errors?.required"
+            *ngIf="loginForm.get('senha').errors?.required"
             text="Campo senha obrigatório">
         </ap-vmessage>
     </div>
@@ -30,9 +30,9 @@
     <button 
         type="submit" 
         class="btn btn-primary btn-block">
-        login
+        Entrar
     </button>
 
 </form>
 
-<p>Ainda não tem um usuário? <a>Cadastre aqui</a></p>
+<p>Ainda não tem um usuário? <a [routerLink]="['signup']">Cadastre aqui</a></p>
