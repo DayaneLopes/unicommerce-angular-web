@@ -2,7 +2,7 @@
 
   <h1 class="text-center">Cliente</h1><br>
 
-  <form class="form">
+  <form [formGroup]="clienteForm" class="form" (submit)="addCliente()">
 
     <div class="form-group">
         <label for="nome">Nome:</label>

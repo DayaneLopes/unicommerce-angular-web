@@ -4,7 +4,7 @@ import { NovoUsuario } from './novo-usuario.';
 
 const API_URL = "http://localhost:8080/api";
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class SignUpService {
 
     constructor(private http: HttpClient) {}

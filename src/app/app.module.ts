@@ -10,6 +10,7 @@ import { ClientesModule } from './clientes/clientes.module';
 import { ProdutosModule } from './produtos/produtos.module';
 import { HomeModule } from './home/home.module';
 import { CoreModule } from './core/core.module';
+import { UsuarioModule } from './usuarios/usuario/usuario.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CoreModule } from './core/core.module';
     CategoriasModule,
     ClientesModule,
     ProdutosModule,
+    UsuarioModule,
     AppRoutingModule,
     ErrorsModule,
     HomeModule,
