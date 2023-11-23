@@ -1,80 +1,56 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Produto } from '../produto/produto';
 import { ProdutoService } from '../produto/produto.service';
-import { CategoriaService } from 'src/app/categorias/categoria/categoria.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { PlatformDetectorService } from 'src/app/core/platform-detector/platform-detector.service';
 
 @Component({
-  selector: 'app-produto-form',
+  selector: 'ap-produto-form',
   templateUrl: './produto-form.component.html',
   styleUrls: ['./produto-form.component.css']
 })
 export class ProdutoFormComponent implements OnInit {
 
-  produto: Produto = {
-    id:0,
-    nome: '',
-    preco: 0,
-    descricao: '',
-    quantidadeEstoque: 0,
-    categoria: 0
-  };
+  produtoForm: FormGroup;
+  @ViewChild('#produtoNomeInput') produtoNomeInput: ElementRef<HTMLInputElement>;
+  produto: Produto;
 
   constructor(
-    private produtoService: ProdutoService,
-    private categoriaService: CategoriaService
-  ) { }
+      private formBuilder: FormBuilder,
+      private produtoService: ProdutoService,
+      private router: Router,
+      private platformDetectorService: PlatformDetectorService
+  ) {}
 
-  ngOnInit() {
-    this.produtoService.create(this.produto).subscribe(
-      novoProduto => {
-        this.produto = novoProduto;
-        console.log('Produto criado com sucesso:', novoProduto);
-      },
-      erro => {
-        console.error('Erro ao criar produto:', erro);
-      }
-    );
+  ngOnInit(): void {
+      this.produtoForm = this.formBuilder.group({
+          nome: ['', Validators.required],
+          preco: ['', Validators.required],
+          descricao: ['', Validators.required],
+          estoque: ['', Validators.required],
+          categoriaId: ['', Validators.required]
+      });
   }
 
-  
-  save() {
-    // Validar se os campos obrigatórios (nome, preço, categoriaId) foram preenchidos
-    if (
-      this.produto.nome && this.produto.nome.trim() !== '' &&
-      this.produto.preco > 0 &&
-      this.produto.categoria > 0
-    ) {
-      // Validar se o preço é positivo
-      if (this.produto.preco <= 0) {
-        console.log('O preço deve ser positivo.');
-        return;
-      }
-
-      // Validar se o ID da categoria é válido (simulando a validação com CategoriaService.getCategoriaPorId)
-      this.categoriaService.getCategoriaPorId(this.produto.categoria).subscribe(
-        categoria => {
-          // Se o ID da categoria for válido, definir o produto como ativo e chamar o serviço para salvar
-          this.produtoService.create(this.produto).subscribe(
-            novoProduto => {
-              console.log('Produto salvo com sucesso:', novoProduto);
-              // Você pode adicionar lógica adicional aqui após salvar o produto, se necessário.
-            },
-            erro => {
-              console.error('Erro ao salvar produto:', erro);
-            }
-          );
-        },
-        erro => {
-          console.log('ID da categoria inválido.');
+  addProduto() {
+      this.produto = this.produtoForm.value;
+    
+      this.produtoService
+          .adicionarProduto(this.produto)
+          .subscribe(
+            err => {
+            console.log(err);
+            this.produtoForm.reset();
+            this.platformDetectorService.isPlatformBrowser() &&
+            this.produtoNomeInput.nativeElement.focus();
+            alert('Dados invalidos para o produto')
         }
-      );
-    } else {
-      console.log('Nome, preço e categoria são campos obrigatórios.');
-    }
+        ); 
+
   }
 
-
-  
-
-
+  voltarParaMenu() {
+    this.router.navigate(['/menu']);
+  }
 }

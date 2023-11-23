@@ -2,27 +2,28 @@ import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'ap-cliente',
-    templateUrl: 'cliente.component.html'
-})
-export class ClienteComponent {
-
-    @Input() id:number;
-    
-    @Input() nome:'';
-
-    @Input() cpf:'';
-    
-    @Input() telefone:'';
-
-    @Input() rua:'';
-
-    @Input() numero:number;
-
-    @Input() complemento:'';
-
-    @Input() bairro:'';
-
-    @Input() cidade:'';
-
-    @Input() estado:'';
-}
+    templateUrl: './cliente.component.html',
+    styleUrls: ['./cliente.component.css']
+  })
+  export class ClienteComponent {
+  
+    @Input() id: number;
+  
+    @Input() nome: string = '';
+  
+    @Input() cpf: string = '';
+  
+    @Input() telefone: string  = '';
+  
+    @Input() rua: string  = '';
+  
+    @Input() numero: string  = '';
+  
+    @Input() complemento: string  = '';
+  
+    @Input() bairro: string  = '';
+  
+    @Input() cidade: string  = '';
+  
+    @Input() estado: string  = '';
+  }

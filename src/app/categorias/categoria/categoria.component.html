@@ -1,5 +1,12 @@
 <p class="text-center"> 
-   {{id}}
-   {{nome}}
-   {{ativo}}
+   Id: {{id}}
 </p>
+<p class="text-center"> 
+   Nome: {{nome}}
+</p>
+
+<p *ngIf="ativo; else messageTemplate" class="text-center">Ativo</p>
+
+<ng-template #messageTemplate>
+   <p class="text-center text-muted">Inativo</p>
+</ng-template>

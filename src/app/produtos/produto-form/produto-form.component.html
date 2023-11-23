@@ -1,37 +1,66 @@
 <body class="container">
 
-  <h1 class="text-center">Unicommerce</h1><br>
-  <h1 class="text-center">Cadastro de Produto</h1><br>
+  <h1 class="text-center">Produto</h1>
 
-  <form class="form">
+  <form [formGroup]="produtoForm" class="form" (submit)="addProduto()">
 
       <div class="form-group">
           <label for="nome">Nome</label>
-          <input id="nome" type="text" class="form-control" required autofocus/>
+          <input 
+            #produtoNomeInput
+            formControlName="nome"
+            type="text" 
+            id="nome" class="form-control" required autofocus/>
+        <ap-vmessage
+            *ngIf="produtoForm.get('nome').errors?.required"
+            text="Nome do produto requerido!">
+        </ap-vmessage>
+        
       </div>
 
       <div class="form-group">
-          <label for="status">Preço</label>
-          <input id="status" type="number" class="form-control" required />
+          <label for="preco">Preço</label>
+          <input 
+            formControlName="preco"
+            id="preco" 
+            type="number" class="form-control"  min="0.01" step="0.01" value="0.0" required />
       </div>
 
       <div class="form-group">
-        <label for="nome">Descrição</label>
-        <input id="nome" type="text" class="form-control" required autofocus/>
+          <label for="descricao">Descrição</label>
+          <input 
+            formControlName="descricao"
+            type="text" 
+            id="descricao" 
+            class="form-control" required autofocus/>
       </div>
 
       <div class="form-group">
-        <label for="nome">Quantidade em estoque</label>
-        <input id="nome" type="number" class="form-control" required autofocus/>
+          <label for="estoque">Quantidade em Estoque</label>
+          <input 
+            formControlName="estoque"
+            type="number" min="1" step="1" 
+            id="estoque" 
+            class="form-control" value="1" required/>
       </div>
 
       <div class="form-group">
-        <label for="nome">Id da categoria</label>
-        <input id="nome" type="number" class="form-control" required autofocus/>
+          <label for="categoriaId">Categoria</label>
+          <input 
+            formControlName="categoriaId"
+            type="text" 
+            id="categoriaId" 
+            class="form-control" required autofocus/>
       </div>
-     
-      <button class="btn btn-primary" type="submit">Cadastrar</button>
+
+      <button 
+        [disabled]="!produtoForm.valid" 
+        class="btn btn-primary"  
+        type="submit">Incluir
+      </button>
   </form>
   <br>
 
+
+  <button (click)="voltarParaMenu()" class="btn btn-secondary">Voltar para o Menu</button>
 </body>

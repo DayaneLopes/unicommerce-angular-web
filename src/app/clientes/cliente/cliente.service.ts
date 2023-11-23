@@ -1,31 +1,43 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Cliente } from './cliente';
+import { Observable } from 'rxjs';
 
 
 
 const API = 'http://localhost:8080/api';
 
 @Injectable({ providedIn: 'root' })
-export class ClienteService {
+export class ClienteService{
 
     constructor(private http: HttpClient) {}
 
     get(id: string) {
-        console.log("get:id");
         return this.http
-            .get<Cliente>(API + '/cliente/' + id);       
+            .get<Cliente>(API + 'cliente/' + id);
     }
 
     getList() {
-        console.log("getList");
         return this.http
-            .get<Cliente[]>(API + '/cliente/lista');   
+            .get<Cliente[]>(API + '/cliente/lista');
     }
 
-    create(cliente : Cliente){
-        return this.http.post<Cliente>(API + '/cliente', cliente);
+    listFromClientePaginated(userName: string, page: number) {
+        const params = new HttpParams()
+            .append('page', page.toString());
+    
+        return this.http
+            .get<Cliente[]>(API + '/cliente/lista', { params });
     }
 
-      
+    create(cliente: Cliente) {
+        return this.http
+            .post<Cliente>(API + '/cliente', cliente);   
+    }
+
+    adicionarCliente(cliente: Cliente): Observable<any> {
+        return this.http
+        .post<any>(API + '/cliente', cliente );
+    }
+
 }

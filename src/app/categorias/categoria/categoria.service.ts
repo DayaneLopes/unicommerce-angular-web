@@ -2,35 +2,41 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Categoria } from "./categoria";
+import { Observable } from 'rxjs';
 
 const API = 'http://localhost:8080/api';
 
 @Injectable({ providedIn: 'root' })
 export class CategoriaService {
-
+   
     constructor(private http: HttpClient) {}
 
     get(id: string) {
-        console.log("get:id");
         return this.http
             .get<Categoria>(API + '/categoria/' + id);       
     }
 
     getList() {
-        console.log("getList");
         return this.http
             .get<Categoria[]>(API + '/categoria/lista');   
     }
 
-
-    create(categoria : Categoria){
-        return this.http.post<Categoria>(API + '/categoria', categoria);
+    create(categoria: Categoria) {
+        return this.http
+            .post<Categoria>(API + '/categoria', categoria);   
     }
 
+    adicionarCategoria(categoria: Categoria): Observable<any> {
+        return this.http
+        .post<any>(API + '/categoria', categoria );
+    }
+
+    listFromCategoriaPaginated(userName: string, page: number) {
+        const params = new HttpParams()
+            .append('page', page.toString());
     
-    getCategoriaPorId(categoriaId: number) {
-     
-        
+        return this.http
+            .get<Categoria[]>(API + '/categoria/lista', { params });
     }
-      
+
 }

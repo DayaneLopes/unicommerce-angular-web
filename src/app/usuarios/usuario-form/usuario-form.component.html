@@ -1,0 +1,43 @@
+<body class="container">
+
+    <h1 class="text-center">Usuario</h1><br>
+  
+    <form [formGroup]="usuarioForm" class="form" (submit)="addUsuario()">
+  
+        <div class="form-group">
+          <label for="login">Login</label>
+          <input #usuarioLoginInput
+              formControlName="login" 
+              id="login" 
+              type="text" 
+              class="form-control" 
+              min="2" required autofocus/>
+          <ap-vmessage
+              *ngIf="usuarioForm.get('login').errors?.required"
+              text="Login do usuario  requerido!">
+          </ap-vmessage> 
+        </div>
+  
+        <div class="form-group">
+          <label for="senha">Senha</label>
+          <input #usuarioSenhaInput
+              formControlName="senha" 
+              id="senha" 
+              type="text" 
+              class="form-control" 
+              min="2" required autofocus/>
+        </div>
+  
+       
+       
+        <button 
+          [disabled]="!usuarioForm.valid" 
+          mat-raised-button
+          class="btn btn-primary" 
+          type="submit">Cadastrar
+        </button>
+    </form>
+    <br>
+    <button (click)="voltarParaMenu()" class="btn btn-secondary">Voltar para o Menu</button>
+  
+  </body>
