@@ -19,9 +19,10 @@ import { LoginGuard } from './core/auth/login.guard';
 import { SignUpComponent } from './home/signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './core/auth/auth.guard';
-import { UsuarioComponent } from './usuarios/usuario/usuario.component';
-import { UsuarioListComponent } from './usuarios/usuario-list/usuario-list.component';
-import { UsuarioListResolver } from './usuarios/usuario-list/usuario-list.resolver';
+import { UsuarioFormComponent } from './usuarios/usuario-form/usuario-form.component';
+import { MenuComponent } from './menu/menu.component';
+//import { UsuarioListComponent } from './usuarios/usuario-list/usuario-list.component';
+//import { UsuarioListResolver } from './usuarios/usuario-list/usuario-list.resolver';
 
 const routes: Routes = [
 
@@ -45,17 +46,23 @@ const routes: Routes = [
         ]
     },
     {
-        path: 'usuario', 
-        component: UsuarioComponent,
-    },
-    { 
-        path: 'usuario/lista', 
-        component: UsuarioListComponent,
-        resolve: {
-            usuarios: UsuarioListResolver
-        },
+        path: 'menu', 
+        component: MenuComponent,
         canActivate: [AuthGuard]
     },
+    {
+        path: 'usuario', 
+        component: UsuarioFormComponent,
+        canActivate: [AuthGuard]
+    },
+    //{ 
+       // path: 'usuario/lista', 
+      //  component: UsuarioListComponent,
+      //  resolve: {
+      //      usuarios: UsuarioListResolver
+      //  },
+      //  canActivate: [AuthGuard]
+   // },
     { 
         path: 'categoria/lista', 
         component: CategoriaListComponent,
@@ -95,7 +102,7 @@ const routes: Routes = [
         }, 
         canActivate: [AuthGuard]
     },
-  
+
     { 
         path: '**', 
         component: NotFoundComponent 

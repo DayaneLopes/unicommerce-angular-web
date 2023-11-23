@@ -48,4 +48,9 @@ export class UsuarioFormComponent implements OnInit {
         ); 
 
   }
+
+  voltarParaMenu() {
+    this.router.navigate(['/menu']);
+  }
+  
 }

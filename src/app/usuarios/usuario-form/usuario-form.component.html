@@ -6,21 +6,21 @@
   
         <div class="form-group">
           <label for="login">Login</label>
-          <input #categoriaNomeInput
+          <input #usuarioLoginInput
               formControlName="login" 
               id="login" 
               type="text" 
               class="form-control" 
               min="2" required autofocus/>
           <ap-vmessage
-              *ngIf="categoriaForm.get('login').errors?.required"
-              text="Nome da categoria requerido!">
+              *ngIf="usuarioForm.get('login').errors?.required"
+              text="Login do usuario  requerido!">
           </ap-vmessage> 
         </div>
   
         <div class="form-group">
           <label for="senha">Senha</label>
-          <input #categoriaNomeInput
+          <input #usuarioSenhaInput
               formControlName="senha" 
               id="senha" 
               type="text" 
@@ -31,12 +31,13 @@
        
        
         <button 
-          [disabled]="!categoriaForm.valid" 
+          [disabled]="!usuarioForm.valid" 
           mat-raised-button
           class="btn btn-primary" 
           type="submit">Cadastrar
         </button>
     </form>
     <br>
+    <button (click)="voltarParaMenu()" class="btn btn-secondary">Voltar para o Menu</button>
   
   </body>

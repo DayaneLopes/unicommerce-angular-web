@@ -49,4 +49,8 @@ export class ProdutoFormComponent implements OnInit {
         ); 
 
   }
+
+  voltarParaMenu() {
+    this.router.navigate(['/menu']);
+  }
 }

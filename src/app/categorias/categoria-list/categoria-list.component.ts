@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Categoria } from '../categoria/categoria';
 import { CategoriaService } from '../categoria/categoria.service';
@@ -15,7 +15,8 @@ export class CategoriaListComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +29,10 @@ export class CategoriaListComponent implements OnInit {
       .subscribe(categorias => {
         this.categorias = this.categorias.concat(categorias);
       });
+  }
+
+  voltarParaMenu() {
+    this.router.navigate(['/menu']);
   }
 }
 

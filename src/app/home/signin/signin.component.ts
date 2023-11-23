@@ -35,7 +35,7 @@ export class SignInComponent implements OnInit{
     this.authService
         .authenticate(login, senha)
         .subscribe(
-            () => this.router.navigate(['cliente/lista']),
+            () => this.router.navigate(['menu']),
             err => {
                 console.log(err);
                 this.loginForm.reset();

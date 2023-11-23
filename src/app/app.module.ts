@@ -10,7 +10,8 @@ import { ClientesModule } from './clientes/clientes.module';
 import { ProdutosModule } from './produtos/produtos.module';
 import { HomeModule } from './home/home.module';
 import { CoreModule } from './core/core.module';
-import { UsuarioModule } from './usuarios/usuario/usuario.module';
+import { MenuModule } from './menu/menu.module';
+import { UsuariosModule } from './usuarios/usuarios.module';
 
 @NgModule({
   declarations: [
@@ -22,10 +23,11 @@ import { UsuarioModule } from './usuarios/usuario/usuario.module';
     CategoriasModule,
     ClientesModule,
     ProdutosModule,
-    UsuarioModule,
+    UsuariosModule,
     AppRoutingModule,
     ErrorsModule,
     HomeModule,
+    MenuModule,
     CoreModule
   ],
   providers: [],

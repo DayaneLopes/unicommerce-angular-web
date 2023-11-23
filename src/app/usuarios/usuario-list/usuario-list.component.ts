@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Usuario } from '../usuario/usuario';
 import { UsuarioService } from '../usuario/usuario.service';
@@ -15,7 +15,8 @@ export class UsuarioListComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +29,10 @@ export class UsuarioListComponent implements OnInit {
       .subscribe(usuarios => {
         this.usuarios = this.usuarios.concat(usuarios);
       });
+  }
+
+  voltarParaMenu() {
+    this.router.navigate(['/menu']);
   }
 }
 

@@ -48,4 +48,8 @@ export class CategoriaFormComponent implements OnInit {
         ); 
 
   }
+
+  voltarParaMenu() {
+    this.router.navigate(['/menu']);
+  }
 }

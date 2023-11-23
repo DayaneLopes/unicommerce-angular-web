@@ -48,4 +48,8 @@ export class ClienteFormComponent implements OnInit {
         ); 
 
   }
+
+  voltarParaMenu() {
+    this.router.navigate(['/menu']);
+  }
 }

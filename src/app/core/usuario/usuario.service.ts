@@ -29,8 +29,10 @@ export class UsuarioService {
     private decodeAndNotify() {
         const token = this.tokenService.getToken();
         const usuario = jwt_decode(token) as Usuario;
-        this.usuario = usuario.login;
+        this.usuario = usuario.sub;
         this.userSubject.next(usuario);
+        console.log(usuario.sub);
+
     }
 
     logout() {

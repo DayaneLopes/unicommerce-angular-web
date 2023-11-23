@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         CommonModule,
         HttpClientModule,
         VMessageModule,
-        //ReactiveFormsModule,
+        ReactiveFormsModule,
         RouterModule
     ],
     exports: [ ClienteFormComponent ]
